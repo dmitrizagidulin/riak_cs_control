@@ -41,7 +41,7 @@ minispade.register('router', function() {
 
   RiakCsControl.DiskUsageRoute = Ember.Route.extend({
     model: function() {
-      var data = {"cluster_capacity":230398124,"cluster_disk_usage_kb":34559719,"cluster_disk_free_kb":195838405,"cluster_node_count":1,"n_val":3,"object_storage_capacity_remaining_kb":65279468};
+      var data = {"cluster_capacity":244277768,"cluster_disk_usage_kb":229621102,"cluster_disk_free_kb":14656666,"cluster_node_count":1,"n_val":3,"object_storage_capacity_remaining_kb":4885555};
       return RiakCsControl.DiskUsage.createRecord(data);
     },
 

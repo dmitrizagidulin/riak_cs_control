@@ -36,8 +36,8 @@ minispade.register('controllers', function() {
     arc: function() {
       var radius = this.get('radius');
 
-      return d3.svg.arc().innerRadius(radius - 20).
-                          outerRadius(radius - 9);
+      return d3.svg.arc().outerRadius(radius - 9); //.innerRadius(radius - 20).
+                          
     }.property('radius'),
 
     /**

@@ -105,9 +105,9 @@ minispade.register('views', function() {
 
     classNames: ['chart'],
 
-    clusterDiskUsageKbBinding: 'content.cluster_disk_usage_kb',
-    clusterDiskFreeKbBinding: 'content.cluster_disk_free_kb',
-    clusterCapacityBinding: 'content.cluster_capacity',
+    clusterDiskUsageKbBinding: 'controller.cluster_disk_usage_kb',
+    clusterDiskFreeKbBinding: 'controller.cluster_disk_free_kb',
+    clusterCapacityBinding: 'controller.cluster_capacity',
 
     data: function() {
       var clusterDiskUsageKb = this.get('clusterDiskUsageKb');
@@ -118,15 +118,18 @@ minispade.register('views', function() {
       var normalizedDiskUsed;
 
       if(clusterDiskUsageKb > 0) {
-        normalizedDiskUsed =
-          Math.round((clusterCapacity / clusterDiskUsageKb) * 100);
+        normalizedDiskUsed = (clusterDiskUsageKb / clusterCapacity) * 100;
+        if(normalizedDiskUsed > 1) {
+          normalizedDiskUsed = Math.round(normalizedDiskUsed);
+        } else {
+          normalizedDiskUsed = normalizedDiskUsed.toFixed(2);
+        }
         normalizedDiskFree = 100 - normalizedDiskUsed;
       } else {
         // Default
         normalizedDiskUsed = 0;
         normalizedDiskFree = 100;
       }
-
       return [normalizedDiskUsed, normalizedDiskFree];
     }.property('clusterDiskUsageKb', 'clusterDiskFreeKb', 'clusterCapacity'),
 
