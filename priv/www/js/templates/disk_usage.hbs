@@ -1,24 +1,31 @@
 <section class="constrained info">
-        <div class="block-container white">
-            <h2 class="title">Disk Usage</h2>
-            <div class="white-slab">
-                <div class="user-list-table">
-                    <table class="info-table">
-                            <tr>
-                              <td>
-                                {{view RiakCsControl.DiskUsageChart}}
-                                <span class="black-title">Total Cluster Capacity:</span><span class="display-item">{{controller.content.cluster_capacity}}</span> kb<br/>
-                                <span class="black-title">Total Disk Usage:</span><span class="display-item">{{controller.cluster_disk_usage_kb}}</span> kb<br/>
-                                <span class="black-title">Total Free Disk Space:</span><span class="display-item">{{controller.cluster_disk_free_kb}}</span> kb<br/>
-                                <span class="black-title">Object Storage Capacity Remaining:</span><span class="display-item">{{controller.object_storage_capacity_remaining_kb}}</span> kb<br/>
-                                <span class="black-title">Cluster Node Count:</span><span class="display-item">{{controller.cluster_node_count}}</span><br/>
-                                <span class="black-title">n_val:</span><span class="display-item">{{controller.n_val}}</span><br/>
-                            </td>
-                          </tr>
-                    </table>
-                </div>
-            </div>
+<div class="block-container white">
+    <h2 class="title">Disk Usage</h2>
+    <div class="white-slab">
+        <div class="user-list-table">
+            <table class="info-table">
+                <tr>
+                  <td>
+                    {{view RiakCsControl.DiskUsageChart}}
 
+                    <span class="black-title" style="color: #0089B2">Total Free Disk Space:</span><span class="display-item">{{controller.cluster_disk_free_kb}}</span> kb<br/>
+
+                    <span class="black-title" style="color: #42AB5B">Total User Object Storage:</span><span class="display-item">{{controller.total_user_object_bytes}}</span> kb<br/>
+
+                    <span class="black-title" style="color: #A16A9A">Total Other Disk Usage:</span><span class="display-item">{{controller.cluster_disk_usage_kb}}</span> kb<br/>
+
+
+                    <span class="black-title">Total Cluster Capacity:</span><span class="display-item">{{controller.content.cluster_capacity}}</span> kb<br/>
+                    
+                    <span class="black-title">Object Storage Capacity Remaining:</span><span class="display-item">{{controller.object_storage_capacity_remaining_kb}}</span> kb<br/>
+                    <span class="black-title">Cluster Node Count:</span><span class="display-item">{{controller.cluster_node_count}}</span><br/>
+                    <span class="black-title">n_val:</span><span class="display-item">{{controller.n_val}}</span><br/>
+                </td>
+              </tr>
+            </table>
         </div>
+    </div>
+
+</div>
 
 </section>

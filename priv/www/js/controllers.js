@@ -1,6 +1,7 @@
 minispade.register('controllers', function() {
 
-  RiakCsControl.DiskUsageController = Ember.ObjectController.extend({});
+  RiakCsControl.DiskUsageController = Ember.ObjectController.extend({
+  });
 
   /**
    * @class
@@ -13,8 +14,8 @@ minispade.register('controllers', function() {
     /**
      * Pie chart dimensions.
      */
-    width: 120,
-    height: 120,
+    width: 250,
+    height: 250,
 
     /**
      * Radius of the pie chart.
@@ -36,8 +37,7 @@ minispade.register('controllers', function() {
     arc: function() {
       var radius = this.get('radius');
 
-      return d3.svg.arc().outerRadius(radius - 9); //.innerRadius(radius - 20).
-                          
+      return d3.svg.arc().outerRadius(radius - 9);  // innerRadius(radius - 20).
     }.property('radius'),
 
     /**
@@ -79,11 +79,13 @@ minispade.register('controllers', function() {
 
       path.enter().append("path");
 
+      var colors = ["#0089B2", "#42AB5B", "#A16A9A"];
+
       path.attr("fill", function(d, i) {
-                  return i === 0 ? abnormalColor : normalColor; }).
+                  return colors[i]; }).
           attr("d", arc).
           style("stroke", "rgba(0, 0, 0, .7)").
-          style("stroke-width", "2px").
+          style("stroke-width", "1px").
           each(function(d) { this._current = d; });
 
       path.transition().duration(750).attrTween("d", arcTween);

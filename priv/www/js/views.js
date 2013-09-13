@@ -108,34 +108,45 @@ minispade.register('views', function() {
     clusterDiskUsageKbBinding: 'controller.cluster_disk_usage_kb',
     clusterDiskFreeKbBinding: 'controller.cluster_disk_free_kb',
     clusterCapacityBinding: 'controller.cluster_capacity',
+    totalUserObjectBytesBinding: 'controller.total_user_object_bytes',
 
     data: function() {
       var clusterDiskUsageKb = this.get('clusterDiskUsageKb');
       var clusterDiskFreeKb = this.get('clusterDiskFreeKb');
       var clusterCapacity = this.get('clusterCapacity');
+      var totalUserObjectBytes = this.get('totalUserObjectBytes') * 3;
 
       var normalizedDiskFree;
-      var normalizedDiskUsed;
+      var normalizedUserObjects;
+      var normalizedOtherDiskUsed;
 
       if(clusterDiskUsageKb > 0) {
-        normalizedDiskUsed = (clusterDiskUsageKb / clusterCapacity) * 100;
-        if(normalizedDiskUsed > 1) {
-          normalizedDiskUsed = Math.round(normalizedDiskUsed);
+        normalizedUserObjects = (totalUserObjectBytes / clusterCapacity) * 100;
+        if(normalizedUserObjects > 1) {
+          normalizedUserObjects = Math.round(normalizedUserObjects);
         } else {
-          normalizedDiskUsed = normalizedDiskUsed.toFixed(2);
+          normalizedUserObjects = normalizedUserObjects.toFixed(2);
         }
-        normalizedDiskFree = 100 - normalizedDiskUsed;
+        normalizedOtherDiskUsed = ((clusterDiskUsageKb - totalUserObjectBytes) / clusterCapacity) * 100;
+        if(normalizedOtherDiskUsed > 1) {
+          normalizedOtherDiskUsed = Math.round(normalizedOtherDiskUsed);
+        } else {
+          normalizedOtherDiskUsed = normalizedOtherDiskUsed.toFixed(2);
+        }
+
+        normalizedDiskFree = 100 - normalizedOtherDiskUsed;
       } else {
         // Default
-        normalizedDiskUsed = 0;
+        normalizedOtherDiskUsed = 0;
+        normalizedUserObjects = 0;
         normalizedDiskFree = 100;
       }
-      return [normalizedDiskUsed, normalizedDiskFree];
+      return [normalizedOtherDiskUsed, normalizedUserObjects, normalizedDiskFree];
     }.property('clusterDiskUsageKb', 'clusterDiskFreeKb', 'clusterCapacity'),
 
     id: '#disk-usage-chart',
-    normalColor: "#84ff7e",
-    abnormalColor: "#ffb765",
+    normalColor: "#0089B2",
+    abnormalColor: "#42AB5B",
   });
 
 });

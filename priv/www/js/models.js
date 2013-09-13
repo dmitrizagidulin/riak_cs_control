@@ -85,6 +85,7 @@ minispade.register('models', function() {
     cluster_disk_usage_kb: DS.attr("number"),
     cluster_disk_free_kb: DS.attr("number"),
     object_storage_capacity_remaining_kb: DS.attr("number"),
+    total_user_object_bytes: DS.attr("number"),
     cluster_node_count: DS.attr("number"),
     n_val: DS.attr("number")
   });
