@@ -77,9 +77,12 @@ minispade.register('controllers', function() {
 
       var path = svg.selectAll("path").data(pie(data));
 
+      // Data looks like: [normalizedOtherDiskUsed, normalizedUserObjects, normalizedDiskFree]
+      // 0089B2 - blue, 42AB5B - green, A16A9A - purple
+
       path.enter().append("path");
 
-      var colors = ["#0089B2", "#42AB5B", "#A16A9A"];
+      var colors = ["#A16A9A", "#42AB5B", "#0089B2"];
 
       path.attr("fill", function(d, i) {
                   return colors[i]; }).

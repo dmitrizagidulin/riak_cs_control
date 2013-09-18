@@ -31,6 +31,10 @@ admin_cs_url() ->
 disk_usage_url() -> 
     binary_to_list(iolist_to_binary([admin_cs_url(), "disk_usage"])).
 
+users_disk_usage_url() -> 
+    binary_to_list(iolist_to_binary([admin_cs_url(), "users_disk_usage"])).
+
+
 %% @doc Return the result of an http call to /riak-cs/disk_usage http api
 %% @spec get_cs_disk_usage() -> {ok, proplist()}|{error, term()}
 get_cs_disk_usage() ->
@@ -38,8 +42,21 @@ get_cs_disk_usage() ->
     case cs_request(get, Url, ["200"]) of
         {ok, _Status, _Headers, Body} ->
             {struct, Response} = mochijson2:decode(Body),
-            Stats = lists:flatten(Response),
-            {ok, Stats};
+            ClusterStats = lists:flatten(Response),
+            Url2 = users_disk_usage_url(),
+
+            Response2 = cs_request(get, Url2, ["200"]),
+            [ClusterStats, Response2];
+
+            % case cs_request(get, Url2, ["200"]) of
+            %     {ok, _Status, _Headers, Body2} ->
+            %         {struct, Response2} = mochijson2:decode(Body2),
+            %         UserStats = lists:flatten(Response2),
+            %         Stats = ClusterStats + UserStats,
+            %         {ok, Stats};
+            %     {error, Error} ->
+            %         {error, Error}
+            % end;
         {error, Error} ->
             {error, Error}
     end.

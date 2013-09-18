@@ -6,20 +6,27 @@
             <table class="info-table">
                 <tr>
                   <td>
+                    <h3>Cluster Disk Usage</h3>
                     {{view RiakCsControl.DiskUsageChart}}
 
-                    <span class="black-title" style="color: #0089B2">Total Free Disk Space:</span><span class="display-item">{{controller.cluster_disk_free_kb}}</span> kb<br/>
+                    <div id="legend">
+                    <h4>Legend</h4>
+                    <span class="chart-legend-square" style="background-color: #42AB5B;"></span>
+                    <span class="black-title">Total User Object Storage:</span><span class="display-item">{{controller.total_user_object_bytes}}</span> kb<br/>
 
-                    <span class="black-title" style="color: #42AB5B">Total User Object Storage:</span><span class="display-item">{{controller.total_user_object_bytes}}</span> kb<br/>
+                    <span class="chart-legend-square" style="background-color: #A16A9A;"></span>
+                    <span class="black-title">Total Other Disk Usage:</span><span class="display-item">{{controller.cluster_disk_usage_kb}}</span> kb<br/>
 
-                    <span class="black-title" style="color: #A16A9A">Total Other Disk Usage:</span><span class="display-item">{{controller.cluster_disk_usage_kb}}</span> kb<br/>
+                    <span class="chart-legend-square" style="background-color: #0089B2;"></span>
+                    <span class="black-title">Total Free Disk Space:</span><span class="display-item">{{controller.cluster_disk_free_kb}}</span> kb<br/>
+                    </div>
 
-
+                    <div style="clear: both;">
                     <span class="black-title">Total Cluster Capacity:</span><span class="display-item">{{controller.content.cluster_capacity}}</span> kb<br/>
-                    
                     <span class="black-title">Object Storage Capacity Remaining:</span><span class="display-item">{{controller.object_storage_capacity_remaining_kb}}</span> kb<br/>
                     <span class="black-title">Cluster Node Count:</span><span class="display-item">{{controller.cluster_node_count}}</span><br/>
                     <span class="black-title">n_val:</span><span class="display-item">{{controller.n_val}}</span><br/>
+                    </div>
                 </td>
               </tr>
             </table>

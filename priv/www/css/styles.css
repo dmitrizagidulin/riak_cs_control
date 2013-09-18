@@ -1544,6 +1544,15 @@ CSS to be applied ONLY on the ring page
 #disk-usage-chart .right {
   float: right;
 }
+
+#disk-usage-chart svg {
+  display: block;
+  margin: 0px auto;
+  /*font: 10px sans-serif;*/
+  float: left;
+  margin-right: 3em;
+}
+
 #disk-usage-chart .gui-dropdown-bg {
   margin-right: 3px;
 }
@@ -1688,11 +1697,13 @@ CSS to be applied ONLY on the ring page
   padding: 20px 20px 0 0;
   margin-bottom: 10px;
 }
-#disk-usage-chart #legend .partition {
+.chart-legend-square {
   display: inline-block;
-  float: none;
-  margin-right: 8px;
-  vertical-align: top;
+  margin-right: 5px;
+  vertical-align: middle;
+  border: 1px solid black;
+  height: 15px;
+  width: 15px;
 }
 #disk-usage-chart #legend #contextual-info {
   margin-bottom: 35px;

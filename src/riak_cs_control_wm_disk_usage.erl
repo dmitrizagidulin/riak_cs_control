@@ -1,11 +1,11 @@
 %% -------------------------------------------------------------------
 %%
-%% Copyright (c) 2007-2012 Basho Technologies, Inc.  All Rights Reserved.
+%% Copyright (c) 2007-2013 Basho Technologies, Inc.  All Rights Reserved.
 %%
 %% -------------------------------------------------------------------
 
-%% @author Christopher Meiklejohn <cmeiklejohn@basho.com>
-%% @copyright 2012 Basho Technologies, Inc.
+%% @author Dmitri Zagidulin <dzagidulin@basho.com>
+%% @copyright 2013 Basho Technologies, Inc.
 
 %% @doc Resource to manage users.
 
@@ -27,11 +27,11 @@
 
 -include_lib("webmachine/include/webmachine.hrl").
 
--record(context, {disk_usage=undefined}).
+-record(context, {disk_usage=undefined, users_disk_usage=undefined}).
 
 %% @doc Initialize the resource.
 init([]) ->
-    {ok, #context{disk_usage=undefined}}.
+    {ok, #context{disk_usage=undefined, users_disk_usage=undefined}}.
 
 %% @doc Return the routes this module should respond to.
 routes() ->
@@ -44,27 +44,6 @@ routes() ->
 %% @doc Support retrieval of disk usage stats
 allowed_methods(ReqData, Context) ->
     {['HEAD', 'GET'], ReqData, Context}.
-
-%% @doc Extract key out of response from riak-cs.
-% -spec extract_key_id({term(), list()}) -> list().
-% extract_key_id(User) ->
-%     {struct, UserDetails} = User,
-%     KeyId = proplists:get_value(key_id, UserDetails, <<"">>),
-%     binary_to_list(KeyId).
-
-%% @doc Attempt to create the user if possible, and generate the path
-%% using the key_id of the new user.
-% create_path(ReqData, Context) ->
-%     case maybe_create_user(ReqData, Context) of
-%         {true, NewContext} ->
-%             User = NewContext#context.user,
-%             KeyId = extract_key_id(User),
-%             Resource = "/users/" ++ KeyId,
-%             NewReqData = wrq:set_resp_header("Location", Resource, ReqData),
-%             {Resource, NewReqData, NewContext};
-%         {false, Context} ->
-%             {"/users", ReqData, Context}
-%     end.
 
 %% @doc Provide respones in JSON only.
 content_types_provided(ReqData, Context) ->
@@ -79,7 +58,7 @@ content_types_provided(ReqData, Context) ->
 %             {false, ReqData, Context}
 %     end.
 
-%% @doc Attempt to retrieve the users and store in the context if
+%% @doc Attempt to retrieve the cluster and users disk storage and store in the context if
 %% possible.
 maybe_retrieve_usage(Context) ->
     case Context#context.disk_usage of
@@ -94,7 +73,7 @@ maybe_retrieve_usage(Context) ->
             {true, Context}
     end.
 
-%% @doc Return serialized users.
+%% @doc Return serialized cluster and users disk storage stats.
 to_json(ReqData, Context) ->
     case maybe_retrieve_usage(Context) of
         {true, NewContext} ->

@@ -121,6 +121,7 @@ minispade.register('views', function() {
       var normalizedOtherDiskUsed;
 
       if(clusterDiskUsageKb > 0) {
+
         normalizedUserObjects = (totalUserObjectBytes / clusterCapacity) * 100;
         if(normalizedUserObjects > 1) {
           normalizedUserObjects = Math.round(normalizedUserObjects);
@@ -134,7 +135,7 @@ minispade.register('views', function() {
           normalizedOtherDiskUsed = normalizedOtherDiskUsed.toFixed(2);
         }
 
-        normalizedDiskFree = 100 - normalizedOtherDiskUsed;
+        normalizedDiskFree = 100 - normalizedOtherDiskUsed - normalizedUserObjects;
       } else {
         // Default
         normalizedOtherDiskUsed = 0;
