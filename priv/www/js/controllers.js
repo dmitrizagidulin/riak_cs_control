@@ -82,7 +82,8 @@ minispade.register('controllers', function() {
 
       path.enter().append("path");
 
-      var colors = ["#A16A9A", "#42AB5B", "#0089B2"];
+      // var colors = ["#A16A9A", "#42AB5B", "#0089B2"];
+      var colors = ["#A16A9A", "#0089B2"];
 
       path.attr("fill", function(d, i) {
                   return colors[i]; }).

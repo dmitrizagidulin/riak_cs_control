@@ -108,41 +108,45 @@ minispade.register('views', function() {
     clusterDiskUsageKbBinding: 'controller.cluster_disk_usage_kb',
     clusterDiskFreeKbBinding: 'controller.cluster_disk_free_kb',
     clusterCapacityBinding: 'controller.cluster_capacity',
-    totalUserObjectBytesBinding: 'controller.total_user_object_bytes',
+    // totalUserObjectBytesBinding: 'controller.total_user_object_bytes',
 
     data: function() {
       var clusterDiskUsageKb = this.get('clusterDiskUsageKb');
       var clusterDiskFreeKb = this.get('clusterDiskFreeKb');
       var clusterCapacity = this.get('clusterCapacity');
-      var totalUserObjectBytes = this.get('totalUserObjectBytes') * 3;
+      // var totalUserObjectBytes = this.get('totalUserObjectBytes') * 3;
 
       var normalizedDiskFree;
-      var normalizedUserObjects;
+      // var normalizedUserObjects;
       var normalizedOtherDiskUsed;
 
       if(clusterDiskUsageKb > 0) {
 
-        normalizedUserObjects = (totalUserObjectBytes / clusterCapacity) * 100;
-        if(normalizedUserObjects > 1) {
-          normalizedUserObjects = Math.round(normalizedUserObjects);
-        } else {
-          normalizedUserObjects = normalizedUserObjects.toFixed(2);
-        }
-        normalizedOtherDiskUsed = ((clusterDiskUsageKb - totalUserObjectBytes) / clusterCapacity) * 100;
+        // normalizedUserObjects = (totalUserObjectBytes / clusterCapacity) * 100;
+        // if(normalizedUserObjects > 1) {
+        //   normalizedUserObjects = Math.round(normalizedUserObjects);
+        // } else {
+        //   normalizedUserObjects = normalizedUserObjects.toFixed(2);
+        // }
+
+        // normalizedOtherDiskUsed = ((clusterDiskUsageKb - totalUserObjectBytes) / clusterCapacity) * 100;
+        normalizedOtherDiskUsed = ((clusterDiskUsageKb) / clusterCapacity) * 100;
         if(normalizedOtherDiskUsed > 1) {
           normalizedOtherDiskUsed = Math.round(normalizedOtherDiskUsed);
         } else {
           normalizedOtherDiskUsed = normalizedOtherDiskUsed.toFixed(2);
         }
 
-        normalizedDiskFree = 100 - normalizedOtherDiskUsed - normalizedUserObjects;
+        // normalizedDiskFree = 100 - normalizedOtherDiskUsed - normalizedUserObjects;
+        normalizedDiskFree = 100 - normalizedOtherDiskUsed;
       } else {
         // Default
         normalizedOtherDiskUsed = 0;
-        normalizedUserObjects = 0;
+        // normalizedUserObjects = 0;
         normalizedDiskFree = 100;
       }
-      return [normalizedOtherDiskUsed, normalizedUserObjects, normalizedDiskFree];
+      // return [normalizedOtherDiskUsed, normalizedUserObjects, normalizedDiskFree];
+      return [normalizedOtherDiskUsed, normalizedDiskFree];
     }.property('clusterDiskUsageKb', 'clusterDiskFreeKb', 'clusterCapacity'),
 
     id: '#disk-usage-chart',
